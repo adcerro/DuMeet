@@ -1,4 +1,6 @@
+import 'package:calendar/month.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_listview/infinite_listview.dart';
 
 class Calendar extends StatelessWidget {
   const Calendar({super.key});
@@ -6,7 +8,8 @@ class Calendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text('S'),
             Text('M'),
@@ -17,6 +20,13 @@ class Calendar extends StatelessWidget {
             Text('S'),
           ],
         ),
+        InfiniteListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return Month(
+              num: DateTime.now().month + index,
+            );
+          },
+        )
       ],
     );
   }
