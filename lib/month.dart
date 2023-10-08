@@ -74,6 +74,8 @@ class Month extends StatelessWidget {
         fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white);
     return Column(children: [
       Container(
+          height: MediaQuery.of(context).size.height * 0.15,
+          width: MediaQuery.of(context).size.width,
           color: Colors.red,
           child: Column(children: [
             const SizedBox(height: 10),
@@ -96,21 +98,25 @@ class Month extends StatelessWidget {
               ],
             )
           ])),
-      GridView.builder(
-        itemCount: _days,
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7,
-            mainAxisExtent: MediaQuery.of(context).size.height / 5.5),
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            alignment: Alignment.center,
-            child: Text(
-              '${index + 1}', // Replace with actual date for that day
+      SizedBox(
+          height: MediaQuery.of(context).size.height * 0.85,
+          width: MediaQuery.of(context).size.width,
+          child: GridView.builder(
+            itemCount: _days,
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 7,
+              mainAxisExtent: MediaQuery.of(context).size.height * 0.17,
             ),
-          );
-        },
-      )
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                alignment: Alignment.center,
+                child: Text(
+                  '${index + 1}', // Replace with actual date for that day
+                ),
+              );
+            },
+          )),
     ]);
   }
 }

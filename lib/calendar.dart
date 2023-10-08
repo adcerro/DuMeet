@@ -12,7 +12,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return InfiniteListView.builder(
-      scrollDirection: Axis.vertical,
+      scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
         return Month(
           num: (DateTime.now().month - 1 + index) % 12 + 1,
