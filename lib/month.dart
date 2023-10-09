@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class Month extends StatelessWidget {
   int _days = 31;
   int _num = 1;
+  int _year = 2023;
   Month({super.key, int num = 1, int year = 2023}) {
     _days = dayCount(num, year);
     _num = num;
+    _year = year;
   }
   bool isLeap(int year) {
     if (year % 4 == 0) {
@@ -70,21 +72,32 @@ class Month extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle titles = const TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white);
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    TextStyle titles = TextStyle(
+        fontSize: height * 0.025,
+        fontWeight: FontWeight.bold,
+        color: Colors.white);
     return Column(children: [
       Container(
-          height: MediaQuery.of(context).size.height * 0.15,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.red,
+          height: height * 0.15,
+          width: width,
+          color: Theme.of(context).primaryColor,
           child: Column(children: [
-            const SizedBox(height: 10),
+            SizedBox(height: height * 0.01),
+            Center(
+                child: Text(
+              _year.toString(),
+              style: titles,
+              textAlign: TextAlign.center,
+            )),
             Center(
                 child: Text(
               monthName(_num),
-              style: titles.copyWith(fontSize: 30),
+              style: titles.copyWith(fontSize: height * 0.035),
+              textAlign: TextAlign.center,
             )),
-            const SizedBox(height: 15),
+            SizedBox(height: height * 0.01),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -99,14 +112,14 @@ class Month extends StatelessWidget {
             )
           ])),
       SizedBox(
-          height: MediaQuery.of(context).size.height * 0.85,
-          width: MediaQuery.of(context).size.width,
+          height: height * 0.85,
+          width: width,
           child: GridView.builder(
             itemCount: _days,
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 7,
-              mainAxisExtent: MediaQuery.of(context).size.height * 0.17,
+              mainAxisExtent: height * 0.17,
             ),
             itemBuilder: (BuildContext context, int index) {
               return Container(

@@ -13,6 +13,7 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         body: Calendar(),
       ),
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.red),
     );
   }
 }
