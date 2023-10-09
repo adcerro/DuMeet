@@ -72,25 +72,18 @@ class Month extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     TextStyle titles = TextStyle(
         fontSize: height * 0.025,
         fontWeight: FontWeight.bold,
         color: Colors.white);
     return Column(children: [
       Container(
-          height: height * 0.15,
+          height: height * 0.12,
           width: width,
           color: Theme.of(context).primaryColor,
           child: Column(children: [
-            SizedBox(height: height * 0.01),
-            Center(
-                child: Text(
-              _year.toString(),
-              style: titles,
-              textAlign: TextAlign.center,
-            )),
             Center(
                 child: Text(
               monthName(_num),
@@ -112,7 +105,7 @@ class Month extends StatelessWidget {
             )
           ])),
       SizedBox(
-          height: height * 0.85,
+          height: height * 0.80,
           width: width,
           child: GridView.builder(
             itemCount: _days,

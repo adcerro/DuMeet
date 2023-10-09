@@ -2,6 +2,8 @@ import 'package:calendar/month.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
 
+int year = DateTime.now().year;
+
 class Calendar extends StatefulWidget {
   const Calendar({super.key});
   @override
@@ -11,13 +13,53 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
-    return InfiniteListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {
-        return Month(
-          num: (DateTime.now().month - 1 + index) % 12 + 1,
-        );
-      },
-    );
+    double height = MediaQuery.sizeOf(context).height;
+    return Column(children: [
+      Container(
+          color: Theme.of(context).hintColor,
+          height: height * 0.05,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    year--;
+                  });
+                },
+                icon: Icon(Icons.arrow_left,
+                    size: height * 0.025, color: Colors.white),
+              ),
+              Text(
+                year.toString(),
+                style: TextStyle(
+                    fontSize: height * 0.025,
+                    color: Theme.of(context).colorScheme.onPrimary),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    year++;
+                  });
+                },
+                icon: Icon(Icons.arrow_right,
+                    size: height * 0.025, color: Colors.white),
+              ),
+            ],
+          )),
+      SizedBox(
+          height: height * 0.95,
+          width: MediaQuery.sizeOf(context).width,
+          child: InfiniteListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              int month = (DateTime.now().month - 1 + index) % 12 + 1;
+              return Month(
+                num: month,
+                year: year,
+              );
+            },
+          ))
+    ]);
   }
 }
