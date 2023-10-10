@@ -14,7 +14,6 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
-    int initialPage = DateTime.now().month - 1;
     return Column(children: [
       Container(
           color: Theme.of(context).hintColor,
