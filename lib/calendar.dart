@@ -1,6 +1,6 @@
 import 'package:calendar/month.dart';
 import 'package:flutter/material.dart';
-import 'package:infinite_listview/infinite_listview.dart';
+import 'package:loop_page_view/loop_page_view.dart';
 
 int year = DateTime.now().year;
 
@@ -14,6 +14,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
+    int initialPage = DateTime.now().month - 1;
     return Column(children: [
       Container(
           color: Theme.of(context).hintColor,
@@ -50,16 +51,13 @@ class _CalendarState extends State<Calendar> {
       SizedBox(
           height: height * 0.95,
           width: MediaQuery.sizeOf(context).width,
-          child: InfiniteListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (BuildContext context, int index) {
-              int month = (DateTime.now().month - 1 + index) % 12 + 1;
-              return Month(
-                num: month,
-                year: year,
-              );
-            },
-          ))
+          child: LoopPageView.builder(
+              itemBuilder: (context, index) {
+                return Month(
+                    num: (DateTime.now().month - 1 + index) % 12 + 1,
+                    year: year);
+              },
+              itemCount: 12))
     ]);
   }
 }

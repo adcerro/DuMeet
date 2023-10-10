@@ -67,14 +67,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  infinite_listview:
-    dependency: "direct main"
-    description:
-      name: infinite_listview
-      sha256: f6062c1720eb59be553dfa6b89813d3e8dd2f054538445aaa5edaddfa5195ce6
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   lints:
     dependency: transitive
     description:
@@ -83,6 +75,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  loop_page_view:
+    dependency: "direct main"
+    description:
+      name: loop_page_view
+      sha256: ed0059c44e29fbdaf1f865cb4511820e6a0e29996a386e05c80d086ce0cf1a00
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.5"
   matcher:
     dependency: transitive
     description:
@@ -186,3 +186,4 @@ packages:
     version: "0.1.4-beta"
 sdks:
   dart: ">=3.1.2 <4.0.0"
+  flutter: ">=2.0.0"

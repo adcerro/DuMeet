@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  infinite_listview: ^1.1.0
+  loop_page_view: ^1.2.5
 
 dev_dependencies:
   flutter_test:
