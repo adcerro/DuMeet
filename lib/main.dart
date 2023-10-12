@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'calendar.dart';
+import 'year.dart';
 
 void main() {
   runApp(const MainApp());
@@ -10,7 +10,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const Scaffold(body: SafeArea(child: Calendar())),
+      home: const Scaffold(body: SafeArea(child: Year())),
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.red),
     );
   }

@@ -4,13 +4,13 @@ import 'package:loop_page_view/loop_page_view.dart';
 
 int year = DateTime.now().year;
 
-class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+class Year extends StatefulWidget {
+  const Year({super.key});
   @override
-  State<Calendar> createState() => _CalendarState();
+  State<Year> createState() => _YearState();
 }
 
-class _CalendarState extends State<Calendar> {
+class _YearState extends State<Year> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
