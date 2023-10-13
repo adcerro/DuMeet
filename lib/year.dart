@@ -49,9 +49,7 @@ class _YearState extends State<Year> {
               ),
             ],
           )),
-      SizedBox(
-          height: height * 0.95,
-          width: MediaQuery.sizeOf(context).width,
+      Expanded(
           child: LoopPageView.builder(
               itemBuilder: (context, index) {
                 return Month(

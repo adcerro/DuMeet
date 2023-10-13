@@ -105,32 +105,30 @@ class Month extends StatelessWidget {
               ],
             )
           ])),
-      SizedBox(
-          height: height * 0.80,
-          width: width,
+      Expanded(
           child: GridView.builder(
-            itemCount: _days,
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 7,
-              mainAxisExtent: height * 0.17,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Day(
-                                num: index + 1,
-                                month: monthName(_num),
-                                year: _year,
-                              )),
-                    );
-                  },
-                  child: Text('${index + 1}'));
-            },
-          )),
+        itemCount: _days,
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 7,
+          mainAxisExtent: height * 0.17,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Day(
+                            num: index + 1,
+                            month: monthName(_num),
+                            year: _year,
+                          )),
+                );
+              },
+              child: Text('${index + 1}'));
+        },
+      )),
     ]);
   }
 }
