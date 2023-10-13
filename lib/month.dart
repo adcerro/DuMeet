@@ -1,3 +1,4 @@
+import 'package:calendar/day.dart';
 import 'package:flutter/material.dart';
 
 class Month extends StatelessWidget {
@@ -115,12 +116,19 @@ class Month extends StatelessWidget {
               mainAxisExtent: height * 0.17,
             ),
             itemBuilder: (BuildContext context, int index) {
-              return Container(
-                alignment: Alignment.center,
-                child: Text(
-                  '${index + 1}', // Replace with actual date for that day
-                ),
-              );
+              return TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Day(
+                                num: index + 1,
+                                month: monthName(_num),
+                                year: _year,
+                              )),
+                    );
+                  },
+                  child: Text('${index + 1}'));
             },
           )),
     ]);

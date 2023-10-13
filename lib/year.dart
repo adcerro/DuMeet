@@ -28,7 +28,8 @@ class _YearState extends State<Year> {
                   });
                 },
                 icon: Icon(Icons.arrow_left,
-                    size: height * 0.025, color: Colors.white),
+                    size: height * 0.025,
+                    color: Theme.of(context).colorScheme.onPrimary),
               ),
               Text(
                 year.toString(),
@@ -43,7 +44,8 @@ class _YearState extends State<Year> {
                   });
                 },
                 icon: Icon(Icons.arrow_right,
-                    size: height * 0.025, color: Colors.white),
+                    size: height * 0.025,
+                    color: Theme.of(context).colorScheme.onPrimary),
               ),
             ],
           )),
