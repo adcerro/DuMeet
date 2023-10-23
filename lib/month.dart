@@ -1,10 +1,11 @@
 import 'package:calendar/day.dart';
 import 'package:flutter/material.dart';
 
+int _days = 31;
+int _num = 1;
+int _year = 2023;
+
 class Month extends StatelessWidget {
-  int _days = 31;
-  int _num = 1;
-  int _year = 2023;
   Month({super.key, int num = 1, int year = 2023}) {
     _days = dayCount(num, year);
     _num = num;
@@ -78,33 +79,22 @@ class Month extends StatelessWidget {
     TextStyle titles = TextStyle(
         fontSize: height * 0.025,
         fontWeight: FontWeight.bold,
-        color: Colors.white);
+        color: Theme.of(context).colorScheme.onPrimary);
     return Column(children: [
       Container(
-          height: height * 0.12,
-          width: width,
-          color: Theme.of(context).primaryColor,
-          child: Column(children: [
+        height: height * 0.12,
+        width: width,
+        color: Theme.of(context).primaryColor,
+        child:
+            //The month name
             Center(
                 child: Text(
-              monthName(_num),
-              style: titles.copyWith(fontSize: height * 0.035),
-              textAlign: TextAlign.center,
-            )),
-            SizedBox(height: height * 0.01),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text('Sun', style: titles),
-                Text('Mon', style: titles),
-                Text('Tue', style: titles),
-                Text('Wed', style: titles),
-                Text('Thu', style: titles),
-                Text('Fri', style: titles),
-                Text('Sat', style: titles),
-              ],
-            )
-          ])),
+          monthName(_num),
+          style: titles.copyWith(fontSize: height * 0.035),
+          textAlign: TextAlign.center,
+        )),
+      ),
+      //The grid of buttons for the days of the month
       Expanded(
           child: GridView.builder(
         itemCount: _days,
@@ -116,6 +106,7 @@ class Month extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return TextButton(
               onPressed: () {
+                //Creates the specific day
                 Navigator.push(
                   context,
                   MaterialPageRoute(
