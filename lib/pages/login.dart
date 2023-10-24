@@ -8,21 +8,34 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
+  final EdgeInsets padding = const EdgeInsets.only(left: 15, right: 15);
   @override
   Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(Icons.calendar_month_rounded),
-          const Text('Welcome!'),
-          TextFormField(
-            decoration: const InputDecoration(label: Text('User')),
+          Icon(Icons.calendar_month_rounded,
+              size: MediaQuery.sizeOf(context).width / 4),
+          Text(
+            'Welcome!',
+            style: Theme.of(context).textTheme.displayMedium,
           ),
-          TextFormField(
-            decoration: const InputDecoration(label: Text('Password')),
-            obscureText: true,
-          ),
+          Padding(
+              padding: padding,
+              child: TextFormField(
+                decoration: InputDecoration(
+                    label: const Text('User'),
+                    labelStyle: Theme.of(context).textTheme.headlineSmall),
+              )),
+          Padding(
+              padding: padding,
+              child: TextFormField(
+                decoration: InputDecoration(
+                    label: const Text('Password'),
+                    labelStyle: Theme.of(context).textTheme.headlineSmall),
+                obscureText: true,
+              )),
           TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
@@ -31,6 +44,9 @@ class LoginState extends State<Login> {
                   },
                 ));
               },
+              style: Theme.of(context).textButtonTheme.style?.copyWith(
+                  backgroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.primaryContainer)),
               child: const Text('Log In'))
         ]);
   }

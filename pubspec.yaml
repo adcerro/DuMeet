@@ -9,13 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #loop_page_view: ^1.2.5
-  #infinite_listview: ^1.1.0
-  #sqflite: ^2.3.0
-  #sqflite_common_ffi_web: ^0.4.0
   intl: ^0.18.1
   table_calendar: ^3.0.9
   flutter_native_splash: ^2.3.4
+  google_fonts: ^6.1.0
+  firebase_auth: ^4.11.1
 
 flutter_native_splash:
   background_image: "assets/inicio.png"
