@@ -18,7 +18,7 @@ class LoginState extends State<Login> {
           Icon(Icons.calendar_month_rounded,
               size: MediaQuery.sizeOf(context).width / 4),
           Text(
-            'Welcome!',
+            'Hola!',
             style: Theme.of(context).textTheme.displayMedium,
           ),
           Padding(
@@ -36,6 +36,9 @@ class LoginState extends State<Login> {
                     labelStyle: Theme.of(context).textTheme.headlineSmall),
                 obscureText: true,
               )),
+          const SizedBox(
+            height: 25,
+          ),
           TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
@@ -44,9 +47,11 @@ class LoginState extends State<Login> {
                   },
                 ));
               },
-              style: Theme.of(context).textButtonTheme.style?.copyWith(
-                  backgroundColor: MaterialStatePropertyAll(
-                      Theme.of(context).colorScheme.primaryContainer)),
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(Theme.of(context).primaryColor),
+                  foregroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.onPrimary)),
               child: const Text('Log In'))
         ]);
   }
