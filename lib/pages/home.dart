@@ -20,18 +20,19 @@ class HomeState extends State<Home> {
           backgroundColor: Theme.of(context).primaryColor,
         ),
         drawer: Drawer(
+            width: MediaQuery.sizeOf(context).width / 2,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-              Text('Usuario aqui'),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Log Out'))
-            ])),
+                  Text('Usuario aqui'),
+                  const Spacer(),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Log Out'))
+                ])),
         body: SafeArea(
             child: ListView(children: [
           TableCalendar(
@@ -49,6 +50,14 @@ class HomeState extends State<Home> {
                 });
               }
             },
+            headerStyle: HeaderStyle(
+                titleCentered: true,
+                formatButtonVisible: false,
+                titleTextStyle: TextStyle(
+                    fontFamily:
+                        Theme.of(context).textTheme.headlineSmall?.fontFamily,
+                    fontSize:
+                        Theme.of(context).textTheme.headlineSmall?.fontSize)),
             calendarStyle: CalendarStyle(
                 todayDecoration: BoxDecoration(
                     color: Theme.of(context).hintColor, shape: BoxShape.circle),
