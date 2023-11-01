@@ -14,6 +14,8 @@ dependencies:
   flutter_native_splash: ^2.3.4
   google_fonts: ^6.1.0
   firebase_auth: ^4.11.1
+  cloud_firestore: ^4.4.5
+  firebase_core: ^2.8.0
 
 flutter_native_splash:
   background_image: "assets/inicio.png"
@@ -26,3 +28,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
