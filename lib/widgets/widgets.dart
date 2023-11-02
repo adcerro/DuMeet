@@ -1,4 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:calendar/widgets/widgets.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+DateTime _focusedDay = DateTime.now();
+DateTime _selectedDay = DateTime.now();
+
+class CustomCalendar extends StatefulWidget {
+  CustomCalendar(
+      {super.key,
+      required DateTime focusedDay,
+      required DateTime selectedDay}) {
+    _focusedDay = focusedDay;
+    _selectedDay = selectedDay;
+  }
+  @override
+  CalendarState createState() => CalendarState();
+}
+
+class CalendarState extends State<CustomCalendar> {
+  @override
+  Widget build(BuildContext context) {
+    String? font = Theme.of(context).textTheme.headlineSmall?.fontFamily;
+    return TableCalendar(
+      firstDay: DateTime.now(),
+      lastDay: DateTime.now().add(const Duration(days: 90)),
+      focusedDay: _focusedDay,
+      selectedDayPredicate: (day) {
+        return isSameDay(_selectedDay, day);
+      },
+      onDaySelected: (selectedDay, focusedDay) {
+        if (!isSameDay(_selectedDay, selectedDay)) {
+          setState(() {
+            _selectedDay = selectedDay;
+            _focusedDay = focusedDay;
+          });
+        }
+      },
+      headerStyle: HeaderStyle(
+          titleCentered: true,
+          formatButtonVisible: false,
+          titleTextStyle: TextStyle(
+              fontFamily: font,
+              fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize)),
+      daysOfWeekStyle: DaysOfWeekStyle(
+          weekdayStyle: TextStyle(fontFamily: font),
+          weekendStyle: TextStyle(fontFamily: font)),
+      calendarStyle: CalendarStyle(
+          todayDecoration: BoxDecoration(
+              color: Theme.of(context).hintColor, shape: BoxShape.circle),
+          selectedDecoration: BoxDecoration(
+              color: Theme.of(context).primaryColor, shape: BoxShape.circle)),
+    );
+  }
+}
 
 TextField reusableTextField(String text, IconData icon, bool isPasswordType,
     TextEditingController controller) {
