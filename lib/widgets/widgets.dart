@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:calendar/widgets/widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 DateTime _focusedDay = DateTime.now();
 DateTime _selectedDay = DateTime.now();
-VoidCallback? _onDatePicked;
+void Function(DateTime, DateTime)? _onDatePicked;
 
 class CustomCalendar extends StatefulWidget {
   CustomCalendar(
       {super.key,
       required DateTime focusedDay,
       required DateTime selectedDay,
-      VoidCallback? onDatePicked}) {
+      void Function(DateTime selectedDate, DateTime focusedDate)?
+          onDatePicked}) {
     _focusedDay = focusedDay;
     _selectedDay = selectedDay;
     _onDatePicked = onDatePicked;
@@ -32,13 +32,7 @@ class CalendarState extends State<CustomCalendar> {
         return isSameDay(_selectedDay, day);
       },
       onDaySelected: (selectedDay, focusedDay) {
-        if (!isSameDay(_selectedDay, selectedDay)) {
-          setState(() {
-            _selectedDay = selectedDay;
-            _focusedDay = focusedDay;
-          });
-          _onDatePicked!();
-        }
+        _onDatePicked!(selectedDay, focusedDay);
       },
       headerStyle: HeaderStyle(
           titleCentered: true,
@@ -58,6 +52,38 @@ class CalendarState extends State<CustomCalendar> {
   }
 }
 
+Dialog dialog(
+    {required BuildContext context,
+    IconData iconData = Icons.question_answer,
+    String text = ''}) {
+  return Dialog(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(iconData, size: 30),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          text,
+          style: Theme.of(context).textTheme.titleLarge,
+          textAlign: TextAlign.center,
+        )
+      ],
+    ),
+  );
+}
+
+Dialog successDialog({required BuildContext context, String text = ''}) {
+  return dialog(context: context, iconData: Icons.check, text: text);
+}
+
+Dialog errorDialog({required BuildContext context, String text = ''}) {
+  return dialog(context: context, iconData: Icons.error, text: text);
+}
+
 TextField reusableTextField(String text, IconData icon, bool isPasswordType,
     TextEditingController controller) {
   return TextField(
@@ -67,10 +93,10 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType,
     decoration: InputDecoration(
       prefixIcon: Icon(
         icon,
-        color: Color(0xff000000),
+        color: const Color(0xff000000),
       ),
       labelText: text,
-      labelStyle: TextStyle(color: Colors.black),
+      labelStyle: const TextStyle(color: Colors.black),
       filled: true,
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.grey.withOpacity(0.1),
@@ -94,13 +120,6 @@ Container uiButton(BuildContext context, String title, Function onTap) {
       onPressed: () {
         onTap();
       },
-      child: Text(
-        title,
-        style: const TextStyle(
-            color: Color(0xffffffff),
-            fontWeight: FontWeight.bold,
-            fontSize: 16),
-      ),
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
@@ -110,6 +129,13 @@ Container uiButton(BuildContext context, String title, Function onTap) {
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Color(0xffffffff),
+            fontWeight: FontWeight.bold,
+            fontSize: 16),
+      ),
     ),
   );
 }

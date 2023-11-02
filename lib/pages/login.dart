@@ -14,7 +14,7 @@ class LoginState extends State<Login> {
   TextEditingController _emailControl = TextEditingController();
   TextEditingController _passwordControl = TextEditingController();
   bool errorMessage = false;
-  Widget verticalView(BuildContext context) {
+  Widget verticalLayout(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,7 +26,7 @@ class LoginState extends State<Login> {
           const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             "Gestiona tus citas universitarias con comodidad",
             style: TextStyle(
               fontSize: 17,
@@ -56,14 +56,14 @@ class LoginState extends State<Login> {
               style: TextStyle(color: Theme.of(context).primaryColor),
             ),
           ),
-          uiButton(context, "Log In", () {
+          uiButton(context, "Iniciar Sesión", () {
             FirebaseAuth.instance
                 .signInWithEmailAndPassword(
                     email: _emailControl.text, password: _passwordControl.text)
                 .then((value) {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
-                  return Home();
+                  return const Home();
                 },
               ));
             }, onError: (value) {
@@ -80,9 +80,9 @@ class LoginState extends State<Login> {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxHeight > 450) {
-          return verticalView(context);
+          return verticalLayout(context);
         } else {
-          return ListView(children: [verticalView(context)]);
+          return ListView(children: [verticalLayout(context)]);
         }
       },
     );

@@ -1,6 +1,8 @@
+import 'package:calendar/pages/agenda.dart';
 import 'package:calendar/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,9 +15,11 @@ DateTime _focusedDay = DateTime.now();
 final user = FirebaseAuth.instance.currentUser;
 bool _calendarVisible = false;
 bool _timeVisible = false;
+String? docente;
+DateTime? cita;
 
 class HomeState extends State<Home> {
-  List<Widget> coreElements(BuildContext context) {
+  List<Widget> coreElements() {
     return [
       Text(
         'Selecciona con quien requieres la cita',
@@ -34,6 +38,7 @@ class HomeState extends State<Home> {
         ],
         onSelected: (value) {
           setState(() {
+            docente = value;
             _calendarVisible = true;
           });
         },
@@ -52,10 +57,14 @@ class HomeState extends State<Home> {
             CustomCalendar(
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
-              onDatePicked: () {
-                setState(() {
-                  _timeVisible = true;
-                });
+              onDatePicked: (selectedDay, focusedDay) {
+                if (!isSameDay(_selectedDay, selectedDay)) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                    _timeVisible = true;
+                  });
+                }
               },
             ),
           ],
@@ -72,19 +81,82 @@ class HomeState extends State<Home> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            SizedBox(
-                height: MediaQuery.sizeOf(context).height / 2,
-                width: MediaQuery.sizeOf(context).width,
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5),
-                  itemBuilder: (context, index) {
-                    return Text(index.toString());
-                  },
-                  itemCount: 10,
-                ))
+            //TODO: Establecer las horas disponibles de cada docente
+            DropdownMenu<DateTime>(
+              dropdownMenuEntries: [
+                DropdownMenuEntry(
+                    value: _selectedDay.copyWith(hour: 6, minute: 0),
+                    label: '6:00 am'),
+                DropdownMenuEntry(
+                    value: _selectedDay.copyWith(hour: 6, minute: 30),
+                    label: '6:30 am'),
+                DropdownMenuEntry(
+                    value: _selectedDay.copyWith(hour: 7, minute: 0),
+                    label: '7:00 am'),
+                DropdownMenuEntry(
+                    value: _selectedDay.copyWith(hour: 7, minute: 30),
+                    label: '7:30 am'),
+                DropdownMenuEntry(
+                    value: _selectedDay.copyWith(hour: 8, minute: 0),
+                    label: '8:00 am')
+              ],
+              onSelected: (value) {
+                cita = value;
+              },
+            ),
+            const SizedBox(height: 20),
+            uiButton(context, 'Programar cita', () {
+              //TODO: Código para registro de citas en base de datos
+              print('$docente | $cita');
+              Navigator.of(context).push(DialogRoute(
+                  context: context,
+                  builder: (context) {
+                    return successDialog(
+                        context: context,
+                        text: 'Programado exitosamente'); // o errorDialog();
+                  }));
+            })
           ]))
     ];
+  }
+
+  Widget drawerElements() {
+    return SafeArea(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      const SizedBox(
+        height: 10,
+      ),
+      Text(
+        '${user?.email}',
+        style: Theme.of(context).textTheme.labelLarge,
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      ListTile(
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return const Agenda();
+            },
+          ));
+        },
+        leading: const Icon(Icons.list),
+        title: const Text('Mis citas'),
+      ),
+      const Spacer(),
+      ListTile(
+        onTap: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+          deactivate();
+          //TODO: Logout logic
+        },
+        leading: const Icon(Icons.exit_to_app),
+        title: const Text('Cerrar Sesión'),
+      )
+    ]));
   }
 
   Widget verticalLayout(BuildContext context) {
@@ -95,24 +167,10 @@ class HomeState extends State<Home> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       drawer: Drawer(
-          width: MediaQuery.sizeOf(context).width / 2,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Text(
-              '${user?.email}',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            const Spacer(),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Log Out'))
-          ])),
+          width: MediaQuery.sizeOf(context).width / 2, child: drawerElements()),
       body: SafeArea(
         child: ListView(
-          children: coreElements(context),
+          children: coreElements(),
         ),
       ),
     );
@@ -122,19 +180,7 @@ class HomeState extends State<Home> {
     return Scaffold(
         drawer: Drawer(
             width: MediaQuery.sizeOf(context).width / 2.5,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('${user?.email}',
-                      style: Theme.of(context).textTheme.labelLarge),
-                  const Spacer(),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Log Out'))
-                ])),
+            child: drawerElements()),
         body: SafeArea(
             child: Row(
           children: [
@@ -152,7 +198,7 @@ class HomeState extends State<Home> {
                 )),
             Expanded(
               child: ListView(
-                children: coreElements(context),
+                children: coreElements(),
               ),
             )
           ],
