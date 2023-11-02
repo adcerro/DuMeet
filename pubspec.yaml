@@ -18,7 +18,8 @@ dependencies:
   firebase_core: ^2.8.0
 
 flutter_native_splash:
-  background_image: "assets/inicio.png"
+  color: "#FFFFFF"
+  image: "assets/inicio.png"
 
 dev_dependencies:
   flutter_test:
