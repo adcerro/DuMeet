@@ -4,14 +4,14 @@ import 'package:table_calendar/table_calendar.dart';
 
 DateTime _focusedDay = DateTime.now();
 DateTime _selectedDay = DateTime.now();
-void Function()? _onDatePicked;
+VoidCallback? _onDatePicked;
 
 class CustomCalendar extends StatefulWidget {
   CustomCalendar(
       {super.key,
       required DateTime focusedDay,
       required DateTime selectedDay,
-      void Function()? onDatePicked}) {
+      VoidCallback? onDatePicked}) {
     _focusedDay = focusedDay;
     _selectedDay = selectedDay;
     _onDatePicked = onDatePicked;
@@ -37,7 +37,7 @@ class CalendarState extends State<CustomCalendar> {
             _selectedDay = selectedDay;
             _focusedDay = focusedDay;
           });
-          _onDatePicked?.call;
+          _onDatePicked!();
         }
       },
       headerStyle: HeaderStyle(

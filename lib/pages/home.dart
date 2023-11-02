@@ -11,7 +11,8 @@ class Home extends StatefulWidget {
 DateTime _selectedDay = DateTime.now();
 DateTime _focusedDay = DateTime.now();
 final user = FirebaseAuth.instance.currentUser;
-bool _visible = false;
+bool _calendarVisible = false;
+bool _timeVisible = false;
 
 class HomeState extends State<Home> {
   List<Widget> coreElements(BuildContext context) {
@@ -33,13 +34,13 @@ class HomeState extends State<Home> {
         ],
         onSelected: (value) {
           setState(() {
-            _visible = true;
+            _calendarVisible = true;
           });
         },
       )),
       const SizedBox(height: 20),
       AnimatedOpacity(
-        opacity: _visible ? 1 : 0,
+        opacity: _calendarVisible ? 1 : 0,
         duration: const Duration(milliseconds: 500),
         child: Column(
           children: [
@@ -51,8 +52,20 @@ class HomeState extends State<Home> {
             CustomCalendar(
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
+              onDatePicked: () {
+                setState(() {
+                  _timeVisible = true;
+                });
+              },
             ),
-            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+      AnimatedOpacity(
+          opacity: _timeVisible ? 1 : 0,
+          duration: const Duration(milliseconds: 500),
+          child: Column(children: [
             Text(
               'Selecciona hora',
               style: Theme.of(context).textTheme.headlineSmall,
@@ -70,9 +83,7 @@ class HomeState extends State<Home> {
                   },
                   itemCount: 10,
                 ))
-          ],
-        ),
-      )
+          ]))
     ];
   }
 
