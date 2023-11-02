@@ -1,6 +1,5 @@
 import 'package:calendar/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
@@ -22,6 +21,7 @@ class HomeState extends State<Home> {
         style: Theme.of(context).textTheme.headlineSmall,
         textAlign: TextAlign.center,
       ),
+      const SizedBox(height: 20),
       Center(
           child: DropdownMenu<String>(
         dropdownMenuEntries: const [
@@ -37,12 +37,42 @@ class HomeState extends State<Home> {
           });
         },
       )),
+      const SizedBox(height: 20),
       AnimatedOpacity(
         opacity: _visible ? 1 : 0,
         duration: const Duration(milliseconds: 500),
-        child:
-            CustomCalendar(focusedDay: _focusedDay, selectedDay: _selectedDay),
-      ),
+        child: Column(
+          children: [
+            Text(
+              'Selecciona fecha',
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            CustomCalendar(
+              focusedDay: _focusedDay,
+              selectedDay: _selectedDay,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Selecciona hora',
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+                height: MediaQuery.sizeOf(context).height / 2,
+                width: MediaQuery.sizeOf(context).width,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5),
+                  itemBuilder: (context, index) {
+                    return Text(index.toString());
+                  },
+                  itemCount: 10,
+                ))
+          ],
+        ),
+      )
     ];
   }
 
