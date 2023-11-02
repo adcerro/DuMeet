@@ -111,6 +111,9 @@ class HomeState extends State<Home> {
               Navigator.of(context).push(DialogRoute(
                   context: context,
                   builder: (context) {
+                    if (docente == null || cita == null) {
+                      return errorDialog(context: context, text: 'Error');
+                    }
                     return successDialog(
                         context: context,
                         text: 'Programado exitosamente'); // o errorDialog();
@@ -148,9 +151,14 @@ class HomeState extends State<Home> {
       const Spacer(),
       ListTile(
         onTap: () {
+          _calendarVisible = false;
+          _timeVisible = false;
+          _selectedDay = DateTime.now();
+          _focusedDay = DateTime.now();
           Navigator.of(context).pop();
           Navigator.of(context).pop();
-          deactivate();
+          super.deactivate();
+          super.dispose();
           //TODO: Logout logic
         },
         leading: const Icon(Icons.exit_to_app),
