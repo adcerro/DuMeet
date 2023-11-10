@@ -52,12 +52,12 @@ class CalendarState extends State<CustomCalendar> {
   }
 }
 
-Dialog dialog(
+AlertDialog dialog(
     {required BuildContext context,
     IconData iconData = Icons.question_answer,
     String text = ''}) {
-  return Dialog(
-    child: Column(
+  return AlertDialog.adaptive(
+    content: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,11 +76,11 @@ Dialog dialog(
   );
 }
 
-Dialog successDialog({required BuildContext context, String text = ''}) {
+AlertDialog successDialog({required BuildContext context, String text = ''}) {
   return dialog(context: context, iconData: Icons.check, text: text);
 }
 
-Dialog errorDialog({required BuildContext context, String text = ''}) {
+AlertDialog errorDialog({required BuildContext context, String text = ''}) {
   return dialog(context: context, iconData: Icons.error, text: text);
 }
 
@@ -97,12 +97,7 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType,
       ),
       labelText: text,
       labelStyle: const TextStyle(color: Colors.black),
-      filled: true,
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.grey.withOpacity(0.1),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
     ),
     keyboardType: isPasswordType
         ? TextInputType.visiblePassword
@@ -117,7 +112,7 @@ Container uiButton(BuildContext context, String title, Function onTap) {
     margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
     child: ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         onTap();
       },
       style: ButtonStyle(
@@ -138,4 +133,104 @@ Container uiButton(BuildContext context, String title, Function onTap) {
       ),
     ),
   );
+}
+
+class ScheduleCard extends StatelessWidget {
+  const ScheduleCard({Key? key, required this.appointment}) : super(key: key);
+  final Map<String, dynamic> appointment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const Icon(
+            Icons.calendar_today,
+            color: Colors.white,
+            size: 15,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            '02/02/23',
+            style: const TextStyle(color: Colors.white),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          const Icon(
+            Icons.access_alarm,
+            color: Colors.white,
+            size: 17,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Flexible(
+              child: Text(
+            '3:30am',
+            style: const TextStyle(color: Colors.white),
+          ))
+        ],
+      ),
+    );
+  }
+}
+
+class CardList extends StatelessWidget {
+  const CardList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            offset: const Offset(3, 4),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Container(
+              width: 120,
+              height: 100,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=843&q=80',
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Text(
+            "Header Text",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const Text(
+            "Body Text",
+            style: TextStyle(),
+          )
+        ],
+      ),
+    );
+  }
 }

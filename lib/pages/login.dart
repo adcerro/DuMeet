@@ -52,7 +52,9 @@ class LoginState extends State<Login> {
             height: 30,
             alignment: Alignment.bottomCenter,
             child: Text(
-              errorMessage ? 'Error, intente de nuevo' : '',
+              errorMessage
+                  ? 'Su email o contraseña es incorrecto, intente de nuevo'
+                  : '',
               style: TextStyle(color: Theme.of(context).primaryColor),
             ),
           ),
@@ -61,6 +63,8 @@ class LoginState extends State<Login> {
                 .signInWithEmailAndPassword(
                     email: _emailControl.text, password: _passwordControl.text)
                 .then((value) {
+              _emailControl.clear();
+              _passwordControl.clear();
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
                   return Home();
