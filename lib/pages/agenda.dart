@@ -11,6 +11,10 @@ class Agenda extends StatefulWidget {
 }
 
 class AgendaState extends State<Agenda> {
+  void reloadAgenda() {
+    setState(() {});
+  }
+
   AlertDialog cancelDialog(DocumentReference ref) {
     return AlertDialog(
       title: const Text('¿Desea cancelar la cita?'),
@@ -29,7 +33,7 @@ class AgendaState extends State<Agenda> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
                 'Cita cancelada',
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               backgroundColor: Colors.red,
             ));
@@ -70,7 +74,7 @@ class AgendaState extends State<Agenda> {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color(0xffffffff),
             borderRadius: BorderRadius.circular(15) // Set the background color
             ),
         child: Column(
@@ -94,26 +98,26 @@ class AgendaState extends State<Agenda> {
                       SizedBox(height: 5),
                       Row(
                         children: <Widget>[
-                          Icon(Icons.calendar_today, color: Colors.blue),
+                          Icon(Icons.calendar_today, color: Color(0xff3b3b3b)),
                           SizedBox(width: 5),
                           Text(
                             formattedDate,
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Colors.blue,
+                              color: Color(0xff3b3b3b),
                             ),
                           ),
                         ],
                       ),
                       Row(
                         children: <Widget>[
-                          Icon(Icons.access_time, color: Colors.blue),
+                          Icon(Icons.access_time, color: Color(0xff3b3b3b)),
                           SizedBox(width: 5),
                           Text(
                             formattedTime,
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Colors.blue,
+                              color: Color(0xff3b3b3b),
                             ),
                           ),
                         ],
@@ -123,10 +127,12 @@ class AgendaState extends State<Agenda> {
                 ),
                 Expanded(
                   flex: 2,
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(url ?? ''),
-                    radius: MediaQuery.sizeOf(context).height < 400 ? 90 : 50,
-                  ),
+                  child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(url ?? ''),
+                        radius: 50,
+                      )),
                 ),
               ],
             ),
@@ -137,7 +143,7 @@ class AgendaState extends State<Agenda> {
                 ElevatedButton(
                   onPressed: onCancelPressed,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
+                    backgroundColor: Colors.red[900],
                   ),
                   child:
                       Text('Cancelar', style: TextStyle(color: Colors.white)),
@@ -145,7 +151,7 @@ class AgendaState extends State<Agenda> {
                 ElevatedButton(
                   onPressed: onReButtonPressed,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
+                    backgroundColor: Colors.green,
                   ),
                   child: Text('Reprogramar',
                       style: TextStyle(color: Colors.white)),
@@ -202,6 +208,9 @@ class AgendaState extends State<Agenda> {
                           builder: (context) => Reprogramar(
                             profesor: details['person'],
                             citaRef: details['ref'],
+                            reloadCallback: () {
+                              setState(() {});
+                            },
                           ),
                         ),
                       );

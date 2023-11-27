@@ -289,8 +289,8 @@ class HomeState extends State<Home> {
     _timeVisible = false;
     _selectedDay = DateTime.now();
     _focusedDay = DateTime.now();
-    super.deactivate();
-    super.dispose();
+    //super.deactivate();
+    //super.dispose();
   }
 
   @override

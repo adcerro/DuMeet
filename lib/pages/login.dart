@@ -27,9 +27,10 @@ class LoginState extends State<Login> {
             height: 20,
           ),
           const Text(
-            "Gestiona tus citas universitarias con comodidad",
+            "Gestiona tus citas con tus profesores con comodidad",
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 17,
+              fontSize: 15,
               fontStyle: FontStyle.normal,
               color: Colors.grey,
             ),
@@ -65,6 +66,10 @@ class LoginState extends State<Login> {
                 .then((value) {
               _emailControl.clear();
               _passwordControl.clear();
+              setState(() {
+                errorMessage = false;
+              });
+
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
                   return Home();

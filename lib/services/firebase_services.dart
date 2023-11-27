@@ -54,7 +54,7 @@ Future<ReservaData> obtenerDatosDeReserva(DocumentReference reservaRef) async {
     return ReservaData(
       nombreProfesor: nombreProfesor,
       estado: estado,
-      fecha: fecha.toDate().toUtc(),
+      fecha: fecha.toDate(),
       imgUrl: imgUrl,
     );
   }
@@ -244,6 +244,13 @@ Future<List<DocumentSnapshot>> getReservas() async {
 
   if (querySnapshot != null) {
     listaReservas.addAll(querySnapshot.docs);
+
+    // Ordenar la lista por la fecha
+    listaReservas.sort((a, b) {
+      DateTime fechaA = (a['fecha_i'] as Timestamp).toDate();
+      DateTime fechaB = (b['fecha_i'] as Timestamp).toDate();
+      return fechaA.compareTo(fechaB);
+    });
   }
 
   return listaReservas;

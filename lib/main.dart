@@ -17,6 +17,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       //The SafeArea Widget prevents the app from overlapping with OS stuff
       //in phones it avoids using the space of the notification bar
       home: const Scaffold(
