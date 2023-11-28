@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
+
   @override
   LoginState createState() => LoginState();
 }
@@ -14,13 +15,14 @@ class LoginState extends State<Login> {
   TextEditingController _emailControl = TextEditingController();
   TextEditingController _passwordControl = TextEditingController();
   bool errorMessage = false;
+
   Widget verticalLayout(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/images/logo.png',
+            'assets/images/icon.png',
             width: MediaQuery.of(context).size.width / 1.2,
           ),
           const SizedBox(
