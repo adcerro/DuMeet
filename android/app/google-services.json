@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758770303658",
+    "project_id": "unireserva-b3c68",
+    "storage_bucket": "unireserva-b3c68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758770303658:android:71b2131e2934f3dbcc86d3",
+        "android_client_info": {
+          "package_name": "com.uninorte.unireserva"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlYzH1NiFhe3KgehQmlvJMWfvGSOrKPtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
