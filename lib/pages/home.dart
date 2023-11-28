@@ -24,7 +24,7 @@ String? motivo;
 DateTime? cita;
 
 class HomeState extends State<Home> {
-  User? user = FirebaseAuth.instance.currentUser;
+  User? user;
   Future<List<String>>? profesoresData;
   Future<List<DropdownMenuEntry<DateTime>>>? timeslots;
 
@@ -33,6 +33,7 @@ class HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    user = FirebaseAuth.instance.currentUser;
     // Start fetching the list of profesores.
     profesoresData = getProfesores();
   }
@@ -140,22 +141,14 @@ class HomeState extends State<Home> {
                     dropdownMenuEntries: timeSlots,
                     onSelected: (value) {
                       cita = value;
-                      setState(() {
-                        _motiveVisible = true;
-                      });
                     },
                   );
                 }
               },
             ),
-          ],
-        ),
-      ),
-      const SizedBox(height: 20),
-      AnimatedOpacity(
-          opacity: _motiveVisible ? 1 : 0,
-          duration: const Duration(milliseconds: 500),
-          child: Column(children: [
+            const SizedBox(
+              height: 20,
+            ),
             Text(
               'Motivo de la cita',
               style: Theme.of(context)
@@ -177,7 +170,7 @@ class HomeState extends State<Home> {
                   },
                 );
               } else {
-                saveReserva(docente, cita, motivo).then((result) {
+                saveReserva(docente, cita).then((result) {
                   if (result) {
                     // Reset and hide the calendar and dropdown
                     setState(() {
@@ -206,7 +199,9 @@ class HomeState extends State<Home> {
                 });
               }
             }),
-          ]))
+          ],
+        ),
+      ),
     ];
   }
 

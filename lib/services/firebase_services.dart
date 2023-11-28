@@ -260,8 +260,7 @@ Future<List<DocumentSnapshot>> getReservas() async {
 //FUNCIONES PARA GUARDAR EN BASE DE DATOS
 
 //Guarda fecha de cita en base de datos
-Future<bool> saveReserva(
-    String? profesor, DateTime? fecha, String? motivo) async {
+Future<bool> saveReserva(String? profesor, DateTime? fecha) async {
   print(fecha);
   try {
     String uid = getCurrentUserUID();
@@ -279,8 +278,7 @@ Future<bool> saveReserva(
         'id_estudiante': estudianteRef,
         'id_profesor': profesorReference,
         'fecha_i': fecha.toLocal(),
-        'status': "ACTIVA",
-        'motivo': motivo,
+        'status': "ACTIVA"
       });
     }
     return true; // Operation was successful
