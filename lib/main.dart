@@ -13,6 +13,7 @@ void main() async {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -25,7 +26,7 @@ class MainApp extends StatelessWidget {
       ),
       theme: ThemeData(
           useMaterial3: true,
-          colorSchemeSeed: Colors.red[900],
+          colorSchemeSeed: const Color.fromRGBO(82, 113, 255, 1),
           textTheme: GoogleFonts.ptSansTextTheme(textTheme)),
     );
   }
