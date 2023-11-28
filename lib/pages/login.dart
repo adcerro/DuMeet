@@ -11,22 +11,20 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  final EdgeInsets padding = const EdgeInsets.only(left: 15, right: 15);
+  final EdgeInsets padding = const EdgeInsets.only(left: 30, right: 30);
   TextEditingController _emailControl = TextEditingController();
   TextEditingController _passwordControl = TextEditingController();
   bool errorMessage = false;
 
-  Widget verticalLayout(BuildContext context) {
+  Widget coreLayout({required BuildContext context}) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/images/icon.png',
+            'assets/images/dumeet.png',
             width: MediaQuery.of(context).size.width / 1.2,
-          ),
-          const SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height / 4.5,
           ),
           const Text(
             "Gestiona tus citas con tus profesores con comodidad",
@@ -91,9 +89,9 @@ class LoginState extends State<Login> {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxHeight > 450) {
-          return verticalLayout(context);
+          return coreLayout(context: context);
         } else {
-          return ListView(children: [verticalLayout(context)]);
+          return ListView(children: [coreLayout(context: context)]);
         }
       },
     );
