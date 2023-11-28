@@ -27,7 +27,7 @@ class CalendarState extends State<CustomCalendar> {
     return TableCalendar(
       firstDay: DateTime.now(),
       lastDay: DateTime.now().add(const Duration(days: 90)),
-      daysOfWeekHeight: 20,
+      daysOfWeekHeight: MediaQuery.sizeOf(context).height/20,
       focusedDay: _focusedDay,
       selectedDayPredicate: (day) {
         return isSameDay(_selectedDay, day);

@@ -40,13 +40,14 @@ class HomeState extends State<Home> {
     backgroundColor: MaterialStatePropertyAll(Colors.grey[200]),
   );
   List<Widget> coreElements() {
+    double size =MediaQuery.sizeOf(context).width / 12<32?MediaQuery.sizeOf(context).width / 12:32;
     return [
       Text(
         'Selecciona con quien requieres la cita',
         style: Theme.of(context)
             .textTheme
             .headlineSmall
-            ?.copyWith(fontSize: MediaQuery.sizeOf(context).width / 12),
+            ?.copyWith(fontSize: size),
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: 20),
@@ -92,7 +93,7 @@ class HomeState extends State<Home> {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
-                  ?.copyWith(fontSize: MediaQuery.sizeOf(context).width / 12),
+                  ?.copyWith(fontSize: size),
               textAlign: TextAlign.center,
             ),
             CustomCalendar(
@@ -120,7 +121,7 @@ class HomeState extends State<Home> {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
-                  ?.copyWith(fontSize: MediaQuery.sizeOf(context).width / 12),
+                  ?.copyWith(fontSize: size),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -152,11 +153,12 @@ class HomeState extends State<Home> {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
-                  ?.copyWith(fontSize: MediaQuery.sizeOf(context).width / 12),
+                  ?.copyWith(fontSize: size),
               textAlign: TextAlign.center,
             ),
             TextField(
               maxLines: 5,
+              controller: _motiveControl,
             ),
             uiButton(context, 'Programar cita', () {
               //Código para registro de citas en base de datos
@@ -176,6 +178,7 @@ class HomeState extends State<Home> {
                       _focusedDay = DateTime.now();
                       _timeVisible = false;
                       _calendarVisible = false;
+                      _motiveControl.clear();
                     });
 
                     showDialog(
