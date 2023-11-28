@@ -16,7 +16,6 @@ DateTime _focusedDay = DateTime.now();
 
 bool _calendarVisible = false;
 bool _timeVisible = false;
-bool _motiveVisible = false;
 String? docente;
 String? motivo;
 DateTime? cita;
@@ -25,6 +24,7 @@ class HomeState extends State<Home> {
   User? user;
   Future<List<String>>? profesoresData;
   Future<List<DropdownMenuEntry<DateTime>>>? timeslots;
+  TextEditingController _motiveControl = TextEditingController();
 
   List<DropdownMenuEntry<String>> dropdownMenuEntries = [];
 
@@ -299,7 +299,6 @@ class HomeState extends State<Home> {
   void dispose() {
     _calendarVisible = false;
     _timeVisible = false;
-    _motiveVisible = false;
     _selectedDay = DateTime.now();
     _focusedDay = DateTime.now();
     //super.deactivate();

@@ -27,6 +27,7 @@ class CalendarState extends State<CustomCalendar> {
     return TableCalendar(
       firstDay: DateTime.now(),
       lastDay: DateTime.now().add(const Duration(days: 90)),
+      daysOfWeekHeight: 20,
       focusedDay: _focusedDay,
       selectedDayPredicate: (day) {
         return isSameDay(_selectedDay, day);
@@ -42,7 +43,8 @@ class CalendarState extends State<CustomCalendar> {
               fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize)),
       daysOfWeekStyle: DaysOfWeekStyle(
           weekdayStyle: TextStyle(fontFamily: font),
-          weekendStyle: TextStyle(fontFamily: font)),
+          weekendStyle: TextStyle(fontFamily: font),
+      ),
       calendarStyle: CalendarStyle(
           todayDecoration: BoxDecoration(
               color: Theme.of(context).hintColor, shape: BoxShape.circle),
