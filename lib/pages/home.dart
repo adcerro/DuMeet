@@ -192,7 +192,7 @@ class HomeState extends State<Home> {
                       _timeVisible = false;
                       _calendarVisible = false;
                       _motiveControl.clear();
-                      FocusScope.of(context).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
                       _controller.jumpTo(0);
                     });
 
