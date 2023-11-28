@@ -231,7 +231,7 @@ Future<List<DropdownMenuEntry<DateTime>>?> generateTimeSlots(
   }
 }
 
-//Obtener reservas del estudiante
+//Obtener reservas del estudiante ACTIVAS
 Future<List<DocumentSnapshot>> getReservas() async {
   List<DocumentSnapshot> listaReservas = [];
   String uid = getCurrentUserUID();
@@ -240,6 +240,7 @@ Future<List<DocumentSnapshot>> getReservas() async {
   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
       .collection('reservas')
       .where('id_estudiante', isEqualTo: estudianteRef)
+      .where('status', isEqualTo: "ACTIVA")
       .get();
 
   if (querySnapshot != null) {
@@ -259,7 +260,8 @@ Future<List<DocumentSnapshot>> getReservas() async {
 //FUNCIONES PARA GUARDAR EN BASE DE DATOS
 
 //Guarda fecha de cita en base de datos
-Future<bool> saveReserva(String? profesor, DateTime? fecha) async {
+Future<bool> saveReserva(
+    String? profesor, DateTime? fecha, String? motivo) async {
   print(fecha);
   try {
     String uid = getCurrentUserUID();
@@ -277,7 +279,8 @@ Future<bool> saveReserva(String? profesor, DateTime? fecha) async {
         'id_estudiante': estudianteRef,
         'id_profesor': profesorReference,
         'fecha_i': fecha.toLocal(),
-        'status': "ACTIVA"
+        'status': "ACTIVA",
+        'motivo': motivo,
       });
     }
     return true; // Operation was successful

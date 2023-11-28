@@ -22,7 +22,7 @@ class AgendaState extends State<Agenda> {
         TextButton(
           onPressed: () async {
             print(ref);
-            ref.delete().then((value) {
+            ref.update({'status': 'CANCELADO'}).then((value) {
               print('Document Deleted');
             }).catchError((error) {
               print('Failed to delete document: $error');
@@ -183,41 +183,50 @@ class AgendaState extends State<Agenda> {
               return Text('Error: ${snapshot.error}');
             } else {
               final reservationsDetails = snapshot.data ?? [];
-
-              return ListView.builder(
-                itemCount: reservationsDetails.length,
-                itemBuilder: (context, index) {
-                  final details = reservationsDetails[index];
-                  return appointment(
-                    person: details['person'] ?? 'Nombre Desconocido',
-                    date: details['date'] ?? 'Detalles Desconocidos',
-                    img: details['img'] ?? '',
-                    ref: details['ref'] ?? '',
-                    onCancelPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return cancelDialog(details['ref']);
-                        },
-                      );
-                    },
-                    onReButtonPressed: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Reprogramar(
-                            profesor: details['person'],
-                            citaRef: details['ref'],
-                            reloadCallback: () {
-                              setState(() {});
-                            },
+              if (reservationsDetails.length != 0) {
+                return ListView.builder(
+                  itemCount: reservationsDetails.length,
+                  itemBuilder: (context, index) {
+                    final details = reservationsDetails[index];
+                    return appointment(
+                      person: details['person'] ?? 'Nombre Desconocido',
+                      date: details['date'] ?? 'Detalles Desconocidos',
+                      img: details['img'] ?? '',
+                      ref: details['ref'] ?? '',
+                      onCancelPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return cancelDialog(details['ref']);
+                          },
+                        );
+                      },
+                      onReButtonPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Reprogramar(
+                              profesor: details['person'],
+                              citaRef: details['ref'],
+                              reloadCallback: () {
+                                setState(() {});
+                              },
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
+                        );
+                      },
+                    );
+                  },
+                );
+              } else {
+                return Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      Icon(Icons.calendar_month),
+                      Text("No tienes citas agendadas")
+                    ]));
+              }
             }
           },
         ),

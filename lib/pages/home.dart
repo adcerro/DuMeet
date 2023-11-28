@@ -18,7 +18,9 @@ DateTime _focusedDay = DateTime.now();
 
 bool _calendarVisible = false;
 bool _timeVisible = false;
+bool _motiveVisible = false;
 String? docente;
+String? motivo;
 DateTime? cita;
 
 class HomeState extends State<Home> {
@@ -98,13 +100,11 @@ class HomeState extends State<Home> {
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
               onDatePicked: (selectedDay, focusedDay) {
-                if (!isSameDay(_selectedDay, selectedDay)) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _focusedDay = focusedDay;
-                    _timeVisible = true;
-                  });
-                }
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                  _timeVisible = true;
+                });
               },
             ),
           ],
@@ -140,12 +140,33 @@ class HomeState extends State<Home> {
                     dropdownMenuEntries: timeSlots,
                     onSelected: (value) {
                       cita = value;
+                      setState(() {
+                        _motiveVisible = true;
+                      });
                     },
                   );
                 }
               },
             ),
-            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+      AnimatedOpacity(
+          opacity: _motiveVisible ? 1 : 0,
+          duration: const Duration(milliseconds: 500),
+          child: Column(children: [
+            Text(
+              'Motivo de la cita',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontSize: MediaQuery.sizeOf(context).width / 12),
+              textAlign: TextAlign.center,
+            ),
+            TextField(
+              maxLines: 5,
+            ),
             uiButton(context, 'Programar cita', () {
               //Código para registro de citas en base de datos
               if (docente == null || cita == null) {
@@ -156,7 +177,7 @@ class HomeState extends State<Home> {
                   },
                 );
               } else {
-                saveReserva(docente, cita).then((result) {
+                saveReserva(docente, cita, motivo).then((result) {
                   if (result) {
                     // Reset and hide the calendar and dropdown
                     setState(() {
@@ -184,10 +205,8 @@ class HomeState extends State<Home> {
                   }
                 });
               }
-            })
-          ],
-        ),
-      )
+            }),
+          ]))
     ];
   }
 
@@ -287,6 +306,7 @@ class HomeState extends State<Home> {
   void dispose() {
     _calendarVisible = false;
     _timeVisible = false;
+    _motiveVisible = false;
     _selectedDay = DateTime.now();
     _focusedDay = DateTime.now();
     //super.deactivate();
