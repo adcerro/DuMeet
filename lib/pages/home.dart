@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:calendar/pages/agenda.dart';
 import 'package:calendar/services/firebase_services.dart';
 import 'package:calendar/widgets/widgets.dart';
